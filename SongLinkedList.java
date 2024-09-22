@@ -206,7 +206,11 @@ public class SongLinkedList {
     /**Shuffles the playlist by creating a new playlist, removing a random song from the original and putting it in new.
      */
     public void shuffle(){
+        if(getSize() == 0){
+            return;
+        }
         SongLinkedList shuffled = new SongLinkedList();
+        
         while(getSize() >0){
             SongNode song = getRandom();
             moveCursor(song);
@@ -215,7 +219,8 @@ public class SongLinkedList {
         }
         head = shuffled.head;
         tail = shuffled.tail;
-        cursor = tail;
+        cursor = head;
+        size = shuffled.size;
     }
 
     /**Prints the playlist in tabular form and adds an arrow to the SongNode the cursor references.
