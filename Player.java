@@ -1,4 +1,11 @@
 import java.util.Scanner;
+
+/**Implements a CLI for a playlist using the SongLinkedList class.
+ * @author Nathan Ng
+ *  email: nathan.ng@stonybrook.edu
+ *  ID: 116188023
+ *  Recitation: 4
+ */
 public class Player{
     static Scanner sc = new Scanner(System.in);
 
@@ -17,7 +24,7 @@ public class Player{
                 "(T) Get the total amount of songs in the playlist\n" +
                 "(Q) Exit the playlist";
         System.out.println(commands);
-
+        //Asks for and executes commands until the quit command is received.
         program:
         while(true){
             System.out.println("Enter an option:");
@@ -43,6 +50,11 @@ public class Player{
         }
         sc.close();
     }
+
+    /**Helper method to a new Song to the playlist. Prompts user for the attributes of a Song.
+     *
+     * @param playlist Playlist to add song to.
+     */
     public static void addSong(SongLinkedList playlist){
         System.out.println("Enter song title:");
         String title = sc.nextLine();
@@ -58,6 +70,10 @@ public class Player{
         System.out.println("'" + title + "' by " + artist + " is added to your playlist.");
     }
 
+    /**Helper method to move the cursor to the next song. Indicates if cursor is already at the end.
+     *
+     * @param playlist Playlist to move the cursor of.
+     */
     public static void nextSong(SongLinkedList playlist){
         if(playlist.cursorForwards())
             System.out.println("Cursor moved to the next song");
@@ -65,6 +81,10 @@ public class Player{
             System.out.println("Already at the end of the playlist");
     }
 
+    /**Helper method to move the cursor to the previous song. Indicates if cursor is already at the beginning.
+     *
+     * @param playlist Playlist to move the cursor of.
+     */
     public static void prevSong(SongLinkedList playlist){
         if(playlist.cursorBackwards())
             System.out.println("Cursor moved to the previous song");
@@ -72,6 +92,10 @@ public class Player{
             System.out.println("Already at the beginning of the playlist");
     }
 
+    /**Helper method to remove a song. Prompts user for song details and indicates if the song does not exist in playlist.
+     *
+     * @param playlist Playlist to remove song from.
+     */
     public static void removeSong(SongLinkedList playlist){
         Song removed = playlist.removeCursor();
         if(removed == null){
@@ -82,6 +106,10 @@ public class Player{
 
     }
 
+    /**Helper method to play a song. Prompts user for song details and indicates if song does not exist.
+     *
+     * @param playlist Playlist to play song from.
+     */
     public static void playSong(SongLinkedList playlist){
         System.out.println("Enter name of song to play:");
         String name = sc.nextLine();
@@ -89,21 +117,39 @@ public class Player{
             playlist.play(name);
 
         }
-        catch(Exception e){
-            System.out.println(e);
+        catch(IllegalArgumentException e){
+            System.out.println("'" + name + "' not found");
         }
     }
 
+    /**Helper method to clear all songs from playlist.
+     *
+     * @param playlist Playlist to clear.
+     */
     public static void clearPlayList(SongLinkedList playlist){
         playlist.deleteAll();
         System.out.println("Playlist cleared.");
     }
 
+    /**Helper method to play a random song from the playlist. Indicates if there are no songs in the playlist.
+     *
+     * @param playlist Playlist to play a random song from.
+     */
     public static void playRandom(SongLinkedList playlist){
-        System.out.println("Playing a random song. . .");
-        Song random = playlist.random();
-        System.out.println("'" + random.getName() + "' by " + random.getArtist() + " is now playing.");
+        try {
+            Song random = playlist.random();
+            System.out.println("Playing a random song. . .");
+            System.out.println("'" + random.getName() + "' by " + random.getArtist() + " is now playing.");
+        }
+        catch(IllegalStateException e){
+            System.out.println("Your playlist is empty.");
+        }
     }
+
+    /**Helper method to get the size of the playlist.
+     *
+     * @param playlist Playlist to get size from.
+     */
     public static void getSize(SongLinkedList playlist){
         int size = playlist.getSize();
         if (size >0)
