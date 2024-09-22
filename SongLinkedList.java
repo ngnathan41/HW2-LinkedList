@@ -51,6 +51,12 @@ public class SongLinkedList {
         }
     }
 
+    /**Checks to see if a song with a specific name exist in the playlist.
+     *
+     * @param name Name to check for.
+     * @return Song instance with specified song name.
+     * @throws IllegalArgumentException Indicates that the song does not exist in the playlist.
+     */
     public Song findSong(String name) throws IllegalArgumentException{
         SongNode current = head;
         while(current != null){

@@ -8,7 +8,7 @@ public class Song{
     private String name;
     private String artist;
     private String album;
-    private String length;
+    private int length;
 
     /**Creates an instance of Song with its name, artist, album, and length.
      *
@@ -17,7 +17,7 @@ public class Song{
      * @param album Album name
      * @param length Song length
      */
-    public Song(String name, String artist, String album, String length){
+    public Song(String name, String artist, String album, int length){
         this.name = name;
         this.artist = artist;
         this.album = album;
@@ -44,7 +44,7 @@ public class Song{
      *
      * @return Length of the song.
      */
-    public String getLength() {
+    public int getLength() {
         return length;
     }
 
@@ -84,7 +84,7 @@ public class Song{
      *
      * @param length Length of the song.
      */
-    public void setLength(String length) {
+    public void setLength(int length) {
         this.length = length;
     }
 

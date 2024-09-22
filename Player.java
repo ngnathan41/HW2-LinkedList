@@ -62,8 +62,27 @@ public class Player{
         String artist = sc.nextLine();
         System.out.println("Enter album:");
         String album = sc.nextLine();
-        System.out.println("Enter length (in seconds):");
-        String length = sc.nextLine();
+
+        int length;
+        while(true){
+            System.out.println("Enter length (in seconds):");
+
+            try{
+
+                length = Integer.parseInt(sc.nextLine());
+
+                if (length < 0){
+                    System.out.println("Negative Length");
+                }
+                else{
+                    break;
+                }
+
+            }
+            catch(Exception e){
+                System.out.println("Invalid Length");
+            }
+        }
 
         Song song = new Song(title, artist, album, length);
         playlist.insertAfterCursor(song);
