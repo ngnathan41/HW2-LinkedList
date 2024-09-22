@@ -114,8 +114,9 @@ public class Player{
         System.out.println("Enter name of song to play:");
         String name = sc.nextLine();
         try{
+            Song song = playlist.findSong(name);
             playlist.play(name);
-
+            System.out.println("'" + name + "' by " + song.getArtist() + " is now playing.");
         }
         catch(IllegalArgumentException e){
             System.out.println("'" + name + "' not found");

@@ -14,6 +14,7 @@ public class SongLinkedList {
     private SongNode tail;
     private SongNode cursor;
     private int size;
+    private Clip c;
 
     /**Initializes an instance of SongLinkedList with no SongNodes.
      *
@@ -31,11 +32,16 @@ public class SongLinkedList {
      * @throws IllegalArgumentException Indicates that the song cannot be found.
      */
     public void play(String name) throws IllegalArgumentException{
+        if(c!= null && c.isRunning()){
+            c.stop();
+            c.close();
+        }
         try{
+            findSong(name);
             AudioInputStream AIS = AudioSystem.getAudioInputStream(
                     new File(name + ".wav")
             );
-            Clip c = AudioSystem.getClip();
+            c = AudioSystem.getClip();
             c.open(AIS);
             c.start();
         }
@@ -45,6 +51,15 @@ public class SongLinkedList {
         }
     }
 
+    public Song findSong(String name) throws IllegalArgumentException{
+        SongNode current = head;
+        while(current != null){
+            if(current.getData().getName().equals(name))
+                return current.getData();
+            current = current.getNext();
+        }
+        throw new IllegalArgumentException();
+    }
     /**Moves the cursor forward if it can.
      *
      * @return True if cursor was moved forward, false otherwise.
