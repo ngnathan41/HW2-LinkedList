@@ -30,6 +30,7 @@ public class SongLinkedList {
      *
      * @param name Name of song to play.
      * @throws IllegalArgumentException Indicates that the song cannot be found.
+     * @precondition THe name must match a song in the playlist and a .wav file.
      */
     public void play(String name) throws IllegalArgumentException{
         if(c!= null && c.isRunning()){
@@ -56,6 +57,7 @@ public class SongLinkedList {
      * @param name Name to check for.
      * @return Song instance with specified song name.
      * @throws IllegalArgumentException Indicates that the song does not exist in the playlist.
+     * @precondition A song with the name exists in playlist.
      */
     public Song findSong(String name) throws IllegalArgumentException{
         SongNode current = head;
@@ -94,6 +96,7 @@ public class SongLinkedList {
      *
      * @param newSong New Song to add.
      * @throws IllegalArgumentException Indicates that the newSong is invalid.
+     * @precondition newSong is not null.
      */
     public void insertAfterCursor(Song newSong) throws IllegalArgumentException{
         if(newSong == null)
@@ -189,6 +192,7 @@ public class SongLinkedList {
      *
      * @return A random Song.
      * @throws IllegalStateException Indicates that there are no songs in the playlist.
+     * @precondition There is at least one song in the playlist.
      */
     public Song random() throws IllegalStateException{
         if(getSize() == 0)
@@ -229,7 +233,8 @@ public class SongLinkedList {
     public void printPlaylist(){
         String format = "%-25s %-25s %-25s %-5s";
         SongNode song = head;
-        System.out.println(String.format(format, "Song", "| Artist", "| Album","| Length (s)"));
+        System.out.println(String.format(format, "Song", "| Artist",
+          "| Album","| Length (s)"));
         while(song != null) {
             System.out.print(song.getData().toString());
             if (song == cursor)
@@ -257,7 +262,8 @@ public class SongLinkedList {
     public String toString(){
         String format = "%-25s %-25s %-25 %-5s";
         SongNode song = head;
-        System.out.println(String.format(format, "Song", "Artist", "Album","Length (s)"));
+        System.out.println(String.format(format, "Song", "Artist", "Album",
+          "Length (s)"));
         String res = "";
         while(song != null) {
             res += song.getData().toString() + "\n";

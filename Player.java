@@ -86,7 +86,8 @@ public class Player{
 
         Song song = new Song(title, artist, album, length);
         playlist.insertAfterCursor(song);
-        System.out.println("'" + title + "' by " + artist + " is added to your playlist.");
+        System.out.println("'" + title + "' by " + artist +
+          " is added to your playlist.");
     }
 
     /**Helper method to move the cursor to the next song. Indicates if cursor is already at the end.
@@ -121,7 +122,8 @@ public class Player{
             System.out.println("Your playlist is empty.");
         }
         else
-            System.out.println("'" + removed.getName() + "' by " + removed.getArtist() + " was removed from the playlist.");
+            System.out.println("'" + removed.getName() + "' by "
+              + removed.getArtist() + " was removed from the playlist.");
 
     }
 
@@ -135,7 +137,8 @@ public class Player{
         try{
             Song song = playlist.findSong(name);
             playlist.play(name);
-            System.out.println("'" + name + "' by " + song.getArtist() + " is now playing.");
+            System.out.println("'" + name + "' by " + song.getArtist()
+              + " is now playing.");
         }
         catch(IllegalArgumentException e){
             System.out.println("'" + name + "' not found");
@@ -159,7 +162,8 @@ public class Player{
         try {
             Song random = playlist.random();
             System.out.println("Playing a random song. . .");
-            System.out.println("'" + random.getName() + "' by " + random.getArtist() + " is now playing.");
+            System.out.println("'" + random.getName() + "' by " +
+              random.getArtist() + " is now playing.");
         }
         catch(IllegalStateException e){
             System.out.println("Your playlist is empty.");

@@ -94,6 +94,7 @@ public class Song{
      */
     public String toString(){
         String format = "%-25s %-25s %-25s %-5s";
-        return String.format(format, getName(), getArtist(), getAlbum(), getLength());
+        return String.format(format, getName(), getArtist(), getAlbum(),
+          getLength());
     }
 }
