@@ -11,16 +11,6 @@ public class SongNode{
         this.data = data;
     }
 
-    public SongNode(SongNode prev, Song data){
-        this.prev = prev;
-        this.data = data;
-    }
-
-    public SongNode(Song data, SongNode next){
-        this.next = next;
-        this.data = data;
-    }
-
     public SongNode getPrev() {
         return prev;
     }

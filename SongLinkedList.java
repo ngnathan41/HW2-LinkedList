@@ -16,9 +16,6 @@ public class SongLinkedList {
         size = 0;
     }
 
-    public SongNode getCursor(){
-        return cursor;
-    }
 
     public void play(String name) throws IllegalArgumentException{
         try{
@@ -89,11 +86,13 @@ public class SongLinkedList {
         else if(cursor == head){
             cursor = cursor.getNext();
             cursor.setPrev(null);
+            head = cursor;
             return song;
         }
         else if(cursor == tail){
             cursor = cursor.getPrev();
             cursor.setNext(null);
+            tail = cursor;
             return song;
         }
         else{
@@ -133,6 +132,7 @@ public class SongLinkedList {
         SongLinkedList shuffled = new SongLinkedList();
         while(getSize() >0){
             SongNode song = getRandom();
+            moveCursor(song);
             removeCursor();
             shuffled.insertAfterCursor(song.getData());
         }

@@ -75,7 +75,7 @@ public class Player{
     public static void removeSong(SongLinkedList playlist){
         Song removed = playlist.removeCursor();
         if(removed == null){
-            System.out.println("No song removed.");
+            System.out.println("Your playlist is empty.");
         }
         else
             System.out.println("'" + removed.getName() + "' by " + removed.getArtist() + " was removed from the playlist.");
@@ -105,6 +105,10 @@ public class Player{
         System.out.println("'" + random.getName() + "' by " + random.getArtist() + " is now playing.");
     }
     public static void getSize(SongLinkedList playlist){
-        System.out.println("Your playlist contains " + playlist.getSize() + " songs.");
+        int size = playlist.getSize();
+        if (size >0)
+            System.out.println("Your playlist contains " + size + " songs.");
+        else
+            System.out.println("Your playlist is empty.");
     }
 }
