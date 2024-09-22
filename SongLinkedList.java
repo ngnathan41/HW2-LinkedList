@@ -135,26 +135,23 @@ public class SongLinkedList {
         //Clears playlist if only one song.
         if(head == tail){
             head = tail = cursor = null;
-            return song;
         }
         else if(cursor == head){
             cursor = cursor.getNext();
             cursor.setPrev(null);
             head = cursor;
-            return song;
         }
         else if(cursor == tail){
             cursor = cursor.getPrev();
             cursor.setNext(null);
             tail = cursor;
-            return song;
         }
         else{
             cursor.getPrev().setNext(cursor.getNext());
             cursor.getNext().setPrev(cursor.getPrev());
             cursor = cursor.getNext();
-            return song;
         }
+        return song;
     }
 
     /**Helper method for shuffle method, moves the cursor to the specified SongNode.
@@ -180,7 +177,7 @@ public class SongLinkedList {
      * @return A random SongNode.
      */
     public SongNode getRandom(){
-        int index = (int) (Math.random() * size );
+        int index = (int) (Math.random() * getSize());
         SongNode song = head;
         for(int i = 0; i<index; i++){
             song = song.getNext();
@@ -218,6 +215,7 @@ public class SongLinkedList {
         }
         head = shuffled.head;
         tail = shuffled.tail;
+        cursor = tail;
     }
 
     /**Prints the playlist in tabular form and adds an arrow to the SongNode the cursor references.
