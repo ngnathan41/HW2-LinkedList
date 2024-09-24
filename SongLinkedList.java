@@ -2,6 +2,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
+import java.util.NoSuchElementException;
 
 /**Implements a doubly linked list using SongNode nodes and represents a playlist.
  * @author Nathan Ng
@@ -29,16 +30,17 @@ public class SongLinkedList {
     /**Plays the song with the specified name if it is the source folder, otherwise throws an IllegalArgumentException.
      *
      * @param name Name of song to play.
-     * @throws IllegalArgumentException Indicates that the song cannot be found.
+     * @throws NoSuchElementException Indicates that the song cannot be found.
      * @precondition THe name must match a song in the playlist and a .wav file.
      */
-    public void play(String name) throws IllegalArgumentException{
+    public void play(String name) throws NoSuchElementException {
         if(c!= null && c.isRunning()){
             c.stop();
             c.close();
         }
         try{
-            findSong(name);
+            Song song = findSong(name).getData();
+            System.out.println("after song");
             AudioInputStream AIS = AudioSystem.getAudioInputStream(
                     new File(name + ".wav")
             );
@@ -47,7 +49,9 @@ public class SongLinkedList {
             c.start();
         }
         catch (Exception e){
-            throw new IllegalArgumentException();
+            if(e instanceof NoSuchElementException){
+                throw new NoSuchElementException();
+            }
             //System.out.println("'" + name + "' not found");
         }
     }
@@ -56,17 +60,17 @@ public class SongLinkedList {
      *
      * @param name Name to check for.
      * @return Song instance with specified song name.
-     * @throws IllegalArgumentException Indicates that the song does not exist in the playlist.
-     * @precondition A song with the name exists in playlist.
+     * @throws NoSuchElementException Indicates that the song does not exist in the playlist.
+     * @p recondition A song with the name exists in playlist.
      */
-    public Song findSong(String name) throws IllegalArgumentException{
+    public SongNode findSong(String name) throws NoSuchElementException{
         SongNode current = head;
         while(current != null){
             if(current.getData().getName().equals(name))
-                return current.getData();
+                return current;
             current = current.getNext();
         }
-        throw new IllegalArgumentException();
+        throw new NoSuchElementException();
     }
     /**Moves the cursor forward if it can.
      *
@@ -161,7 +165,7 @@ public class SongLinkedList {
      *
      * @param song SongNode to move cursor to.
      */
-    public void moveCursor(SongNode song){
+    private void moveCursor(SongNode song){
         cursor = head;
         while(cursor != song && cursor.getNext() != null)
             cursor = cursor.getNext();
@@ -214,7 +218,7 @@ public class SongLinkedList {
             return;
         }
         SongLinkedList shuffled = new SongLinkedList();
-        
+        Song originalCursor = cursor.getData();
         while(getSize() >0){
             SongNode song = getRandom();
             moveCursor(song);
@@ -223,8 +227,8 @@ public class SongLinkedList {
         }
         head = shuffled.head;
         tail = shuffled.tail;
-        cursor = head;
         size = shuffled.size;
+        cursor = findSong(originalCursor.getName());
     }
 
     /**Prints the playlist in tabular form and adds an arrow to the SongNode the cursor references.

@@ -1,3 +1,4 @@
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**Implements a CLI for a playlist using the SongLinkedList class.
@@ -85,9 +86,15 @@ public class Player{
         }
 
         Song song = new Song(title, artist, album, length);
-        playlist.insertAfterCursor(song);
-        System.out.println("'" + title + "' by " + artist +
-          " is added to your playlist.");
+        try {
+            playlist.insertAfterCursor(song);
+            System.out.println("'" + title + "' by " + artist +
+                    " is added to your playlist.");
+        }
+        catch(Exception e){
+            System.out.println("newSong is null");
+        }
+
     }
 
     /**Helper method to move the cursor to the next song. Indicates if cursor is already at the end.
@@ -135,12 +142,12 @@ public class Player{
         System.out.println("Enter name of song to play:");
         String name = sc.nextLine();
         try{
-            Song song = playlist.findSong(name);
+            Song song = playlist.findSong(name).getData();
             playlist.play(name);
             System.out.println("'" + name + "' by " + song.getArtist()
               + " is now playing.");
         }
-        catch(IllegalArgumentException e){
+        catch(NoSuchElementException e){
             System.out.println("'" + name + "' not found");
         }
     }
@@ -165,7 +172,7 @@ public class Player{
             System.out.println("'" + random.getName() + "' by " +
               random.getArtist() + " is now playing.");
         }
-        catch(IllegalStateException e){
+        catch(NoSuchElementException e){
             System.out.println("Your playlist is empty.");
         }
     }
